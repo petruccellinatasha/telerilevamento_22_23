@@ -18,7 +18,7 @@ plot(l2011)
 cl <- colorRampPalette(c("black", "grey", "light grey"))(100) #100=numero di colori possibili
 plot(l2011, col=cl)
 
-# Bande del Landsat:
+# Bande del Landsat ETM+:
 # b1 = blu
 # b2 = verde
 # b3 = rosso
@@ -64,8 +64,44 @@ par(mfrow=c(2,2)) # per plottare insieme 4 bande (2 righe e 1 colonna)
 plot(l2011$B1_sre, col=bl)
 plot(l2011$B2_sre, col=vr)
 plot(l2011$B3_sre, col=rd)
-plot(l2011$B4_sre, col=vr)
+plot(l2011$B4_sre, col=nir)
 dev.off()
+
+# Usiamo la funzione plotRGB per montare/sovrapporre le bande in una stessa immagine --> otteniamo l'immagine a colori naturali
+plotRGB(l2011, r=3, g=2, b=1, stretch="lin") #stretch:amplia i valori per far sì che vediamo meglio i contrasti tra i colori (può essere lineare o ad istogrammi)
+
+# Usiamo anche la banda dell'infrarosso vicino --> Tutto quello che rifletteva nel NIR diventa rosso ora 
+plotRGB(l2011, r=4, g=3, b=2, stretch="lin") 
+plotRGB(l2011, r=3, g=4, b=2, stretch="hist") # aumenta da dicretizzazione 
+
+# Spostiamo NIR nella componente blue  -->  Tutto quello che diventa giallo rappresenta un suolo nudo 
+plotRGB(l2011, r=3, g=2, b=4, stretch="lin") 
+
+# Creiamo un multriframe con visualizzazione RGB 
+# linear stretch e colori naturali (in alto) e falsi colori con hist stretch (in basso)
+par(mfrow=c(2,1)) 
+plotRGB(l2011, r=3, g=2, b=1, stretch="lin")
+plotRGB(l2011, r=3, g=4, b=2, stretch="hist")
+
+
+# ESERCIZIO
+#caricare l'immagine del 1988
+l1988 <- brick("p224r63_1988.grd")
+plot(l1988)
+# COnfrontiamo le due immagini
+par(mfrow=c(2,1)) 
+plotRGB(l1988, r=4, g=3, b=2, stretch="lin")
+plotRGB(l2011, r=4, g=3, b=2, stretch="lin")
+
+
+
+
+
+
+
+
+
+
 
 
 
