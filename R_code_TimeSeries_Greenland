@@ -1,0 +1,32 @@
+# 3 ESercitazione: Time series Analysis 
+
+library(raster)
+
+# Settiamo la cartella di lavoro
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/3esercitazione/Greenland") # colleghiamo così la cartella di lavoro esterna ad R
+
+# Importiamo un singolo Layer, una sola banda
+lst2000 <-raster("lst_2000.tif")
+plot(lst2000)
+
+# Esercizio: importare tutti i dati e creare dataframe c
+lst2005 <- raster("lst_2005.tif")
+lst2010 <- raster("lst_2010.tif")
+lst2015 <- raster("lst_2015.tif")
+
+par(mfrow=c(2,2))
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+plot(lst2000, main="2000", col=cl)
+plot(lst2005, main="2005", col=cl)
+plot(lst2010, main="2010", col=cl)
+plot(lst2015, main="2015", col=cl)
+dev.off()
+
+# Uso la funzione apply per importare tutti i dati insieme
+# Creiamo una lista di files che hanno tutti un pattern comune (lst oppure 20 oppure tif)
+lst <- list.files(pattern="lst")
+tgr <- stack(import) # raster unico con tutti i dati
+plot(tgr, col=cl)
+plotRGB(tgr, r=1, g=2, b=3, stretch="lin") #lst2000 nel red, lst2005 nel verde e lst2010 nel blu
+
+########################################################################################################################
