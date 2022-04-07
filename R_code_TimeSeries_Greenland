@@ -30,3 +30,54 @@ plot(tgr, col=cl)
 plotRGB(tgr, r=1, g=2, b=3, stretch="lin") #lst2000 nel red, lst2005 nel verde e lst2010 nel blu
 
 ########################################################################################################################
+
+#  ESempio 2 
+
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/3esercitazione/EN")
+
+# Importiamo i dati
+
+# Mese: gennaio
+EN_01 <- raster("EN_0001.png")
+cl <- colorRampPalette(c('red','orange','yellow'))(100)
+plot(EN_01, col=cl)
+
+# Mese: marzo
+EN_13 <- raster("EN_0013.png")
+cl <- colorRampPalette(c('red','orange','yellow'))(100)
+plot(EN_13, col=cl)
+
+# Importiamo il dataset tutto insieme
+# Esercizio
+EN_list <- list.files(pattern="EN")
+EN_import <- lapply(EN_list, raster)
+EN_data <- stack(EN_import)
+plot(EN_data, col=cl)
+
+# Plottiamo la prima e l'ultima immagine
+par(mfrow=c(1,2))
+cl <- colorRampPalette(c('red','orange','yellow'))(100)
+plot(EN_data$EN_0001, col=cl)
+plot(EN_data$EN_0013, col=cl)
+# oppure
+EN_113 <- stack(EN_data[[1]], EN_data[[13]])
+plot(EN_113, col=cl)
+dev.off()
+
+# Differenza tra le due immagini
+diff <- EN_data$EN_0001 - EN_data$EN_0013
+cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
+plot(diff, col=cl)
+
+
+
+
+
+
+
+
+
+
+
+
+
