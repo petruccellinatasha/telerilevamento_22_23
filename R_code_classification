@@ -1,0 +1,17 @@
+# 4eserictazione
+
+library(raster)
+library(RStoolbox)
+
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/4esercitazione") 
+
+
+# Importare e plottare l'immagine
+so <- brick("Solar_Orbiter.jpg")
+plotRGB(so, r=1, g=2, b=3, stretch="lin")
+plotRGB(so, r=1, g=2, b=3, stretch="hist")
+
+# Classificazione dell'immagine
+soc <- unsuperClass(so, nClasses=3)
+cl <- colorRampPalette(c('yellow','black','red'))(100)
+plot(soc$map, col=cl)
