@@ -33,6 +33,8 @@ plotRGB(tgr, r=1, g=2, b=3, stretch="lin") #lst2000 nel red, lst2005 nel verde e
 
 #  ESempio 2 
 
+library(raster)
+
 setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/3esercitazione/EN")
 
 # Importiamo i dati
@@ -69,15 +71,7 @@ diff <- EN_data$EN_0001 - EN_data$EN_0013
 cl <- colorRampPalette(c("blue","light blue","pink","red"))(100)
 plot(diff, col=cl)
 
-
-
-
-
-
-
-
-
-
-
-
+# Plottiamo con colori naturali
+plotRGB(EN_data, r=1 , g=7  , b=13, stretch="lin" )
+plotRGB(EN_data, r=1 , g=7  , b=13, stretch="hist")
 
