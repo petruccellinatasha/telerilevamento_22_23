@@ -1,4 +1,4 @@
-# 4eserictazione
+# 4esericitazione
 
 library(raster)
 library(RStoolbox)
@@ -15,3 +15,34 @@ plotRGB(so, r=1, g=2, b=3, stretch="hist")
 soc <- unsuperClass(so, nClasses=3)
 cl <- colorRampPalette(c('yellow','black','red'))(100)
 plot(soc$map, col=cl)
+
+##############################################################################################################################
+
+# Classificazione della composizione mineralogicA del Gran Canyon
+
+#gc <- brick("iss022e014078_087_lrg.jpg")
+gc <- brick("dolansprings_oli_2013088_canyon_lrg.jpg")
+plotRGB(gc, r=1, g=2, b=3, stretch="lin")
+
+gcc <- unsuperClass(gc, nClasses=2)
+plot(gcc$map)
+
+par(mfrow=c(2,1))
+plotRGB(gc, r=1, g=2, b=3, stretch="hist")
+plot(gcc$map)
+dev.off()
+
+gcc <- unsuperClass(gc, nClasses=4)
+cl <- colorRampPalette(c('yellow','red','blue', 'black'))(100)
+plot(gcc$map, col = cl)
+
+st <- stack(gc, gcc$map)
+plot(st)
+
+
+
+
+
+
+
+
