@@ -1,0 +1,39 @@
+# 5Esercitazione
+
+library(raster)
+library(RStoolbox)
+library(ggplot2)
+library(patchwork)
+
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/5esercitazione")
+
+l1992 <- brick("defor1_.jpg")
+plotRGB(l1992, r=1, g=2, b=3, stretch="lin") # banda 1=NIR, banda 2=RED e banda 3=GREEN
+l2006 <- brick("defor2_.jpg")
+plotRGB(l2006, r=1, g=2, b=3, stretch="lin")
+
+par(mfrow=c(2,1))
+plotRGB(l1992, r=1, g=2, b=3, stretch="lin")
+plotRGB(l2006, r=1, g=2, b=3, stretch="lin")
+dev.off()
+
+p1 <- ggRGB(l1992, 1, 2, 3, stretch="lin") # ggplo2
+p2 <- ggRGB(l2006, 1, 2, 3, stretch="lin")
+p1 + p2 # patchwork 
+# oppure P1/p2
+
+# classificazione delle classi 
+l92cl <- unsuperClass(l1992, nClasses=2)
+plot(l92cl$map)
+# classe 1: foresta e classe 2: agricoltura
+
+l06cl <- unsuperClass(l2006, nClasses=2)
+plot(l06cl$map)
+
+# per conoscere la frequenza delle due classi
+freq(l92cl$map)
+# classe 1: 306280 pixels
+# classe 2:  35012 pixels
+freq(l06cl$map)
+# classe 1: 163724 pixels
+# classe 2: 179002 pixels
