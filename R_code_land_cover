@@ -37,3 +37,39 @@ freq(l92cl$map)
 freq(l06cl$map)
 # classe 1: 163724 pixels
 # classe 2: 179002 pixels
+
+# Calcolo della proporzione e della percentuale di una certa classe nell'immagine
+tot92 <- 341292
+prop_forest_92 <- 306280/tot92
+perc_forest_92 <- 306280*100/tot92
+
+perc_agri_92 <- 100-perc_forest_92
+
+# percentuale foresta: 89.7 %
+# percentuale agricoltura: 10.3%
+
+tot06 <- 342726
+perce_forest_06 <- 179002*100/tot06
+perce_agric_06 <- 100 - perce_forest_06
+
+# percentuale foresta: 52.2 %
+# percentuale agricoltura: 47.8 %
+
+##################################################################################
+
+# Costruzione dataframe
+
+class <- c("Foresta", "Agricoltura")
+percent_92 <- c(89.7, 10.3)
+percent_06 <- c(52.2, 47.8)
+multitemporal <-data.frame(class, percent_92, percent_06)
+# View(multitemporal) per vederla in formato tabella
+
+
+
+
+
+
+
+
+
