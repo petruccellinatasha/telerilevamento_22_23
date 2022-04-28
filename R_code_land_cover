@@ -65,11 +65,14 @@ percent_06 <- c(52.2, 47.8)
 multitemporal <-data.frame(class, percent_92, percent_06)
 # View(multitemporal) per vederla in formato tabella
 
+ggplot(multitemporal, aes(x=class, y=percent_92, color=class)) + geom_bar(stat="identity", fill="white")
+ggplot(multitemporal, aes(x=class, y=percent_06, color=class)) + geom_bar(stat="identity", fill="black")
 
+# Salvataggio
+pdf("Percentuale_1992.pdf")
+ggplot(multitemporal, aes(x=class, y=percent_92, color=class)) + geom_bar(stat="identity", fill="white")
+dev.off()
 
-
-
-
-
-
-
+pdf("Percentuale_1006.pdf")
+ggplot(multitemporal, aes(x=class, y=percent_06, color=class)) + geom_bar(stat="identity", fill="black")
+dev.off()
