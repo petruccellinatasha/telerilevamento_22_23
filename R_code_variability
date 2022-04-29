@@ -1,0 +1,30 @@
+# 6esercitazione
+
+library(raster)
+library(RStoolbox)
+library(ggplot2)
+library(patchwork)
+library(viridis)
+
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/6esercitazione")
+
+sent <- brick("sentinel.png")
+p1 <- ggRGB(sent, r=1, g=2, b=3, stretch="lin") # banda 1: NIR
+p2 <- ggRGB(sent, r=2, g=1, b=3, stretch="lin")
+p1 + p2
+
+# Calcolo della variabilità 
+# NIR
+nir <- sent$sentinel.1
+plot(nir)
+sd_3 <- focal(nir, matrix(1/9, 3, 3), fun=sd) #usando una finestra mobile 3x3 e la deviazione standard
+clsd <- colorRampPalette(c('blue','green','pink','magenta','orange','brown','red','yellow'))(100) 
+plot(sd_3, col=clsd) #vediamo zone a maggiore e minore variabilità
+
+ggplot() + geom_raster(sd_3, mapping = aes(x=x, y=y, fill=layer))
+ggplot() + geom_raster(sd_3, mapping = aes(x=x, y=y, fill=layer)) + scale_fill_viridis() + ggtitle("Standard deviation by viridis")
+ggplot() + geom_raster(sd_3, mapping = aes(x=x, y=y, fill=layer)) + scale_fill_viridis(option = "magma") + ggtitle("Standard deviation by viridis")
+
+# ESERCIZIO: cambiare la dimensione della finestra mobile
+sd_7 <- focal(nir, matrix(1/49, 7, 7), fun=sd) #usando una finestra mobile 7x7 e la deviazione standard
+plot(sd_7, col=clsd) #vediamo zone a maggiore e minore variabilità
