@@ -1,0 +1,24 @@
+# 7esercitazione
+
+library(raster)
+library(RStoolbox) #contiene le funzioni per l'analisi multivariata
+library(ggplo2)
+library(patchwork)
+
+# settaggio della cartella di lavoro
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/7esercitazione")
+
+# caricamento  immagine satellitare
+p224r63_2011 <- brick("p224r63_2011_masked.grd")
+plot(p224r63_2011)
+
+# ricampionamento
+p224r63_2011res <- aggregate(p224r63_2011, fact=10) #linearmente compattiamo 10 pixel con un fattore pari a 10
+g1 <- ggRGB(p224r63_2011, 4, 3, 2)
+g2 <- ggRGB(p224r63_2011res, 4, 3, 2)
+g1+g2
+
+
+p224r63_2011res100 <- aggregate(p224r63_2011, fact=100) 
+g3 <- ggRGB(p224r63_2011res100, 4, 3, 2)
+g1+g2+g3
