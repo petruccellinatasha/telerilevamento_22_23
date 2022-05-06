@@ -1,0 +1,52 @@
+# 7bis esercitazione: calcolo della variabilità spaziale basata sulla mappa multivariata
+
+library(raster)
+library(RStoolbox) #contiene le funzioni per l'analisi multivariata
+library(ggplot2)
+library(viridis)
+library(patchwork)
+
+setwd("C:/Users/natasha/Desktop/TELERILEVAMENTO/7esercitazione")
+
+
+siml<- brick("sentinel.png")
+ggRGB(siml, 1, 2, 3)
+ggRGB(siml, 3, 1, 2) # il suolo nudo diventa viola
+
+# ESERCIZIO: calcolare la pca 
+siml_pca <- rasterPCA(siml)
+plot(siml_pca$map) 
+summary(siml_pca$model)
+
+g1 <- ggplot() +
+  geom_raster(siml_pca$map, mapping=aes(x=x, y=y, fill=PC1)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC1")
+
+g2<- ggplot() +
+  geom_raster(siml_pca$map, mapping=aes(x=x, y=y, fill=PC2)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC2")
+
+g3 <- ggplot() +
+  geom_raster(siml_pca$map, mapping=aes(x=x, y=y, fill=PC3)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("PC3")
+
+g1 + g2 + g3
+
+
+# Calcolo variabilità
+
+pc1 <- siml_pca$map[[1]]
+sd3 <- focal(pc1, matrix(1/9, 3, 3), fun=sd)
+
+ggplot() +
+  geom_raster(sd3, mapping=aes(x=x, y=y, fill=layer)) +
+  scale_fill_viridis(option = "inferno") +
+  ggtitle("Standard deviation of PC1")
+
+
+
+
+
